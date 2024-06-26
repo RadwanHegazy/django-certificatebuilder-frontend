@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الصفحة الشخصية</title>
+    <link rel="stylesheet" href="{% static 'style/profile.css' %}">
+
+</head>
+<body>
+
+    
+    
+    <img src="{% static 'images/bg.png' %}" alt="" class="bg">
+
+    <div class="up">
+        <h1>{{c_user.full_name}}</h1>
+        <a href="{% url 'logout' %}">تسجيل الخروج</a>
+    </div>
+
+    <div class="cont">
+
+        <form class="view" method="POST">
+            {% csrf_token %}
+            <div class="screen">
+                
+                <div class="img-cont">
+                    <input name="bg_img"  type="text" value="cer_blue" id="bg" hidden>
+                    <img src="{% static 'images/certificates/cer_blue.png' %}" alt="">
+                    <input type="text" name="head" class="head" maxlength="30" value="Certificate Head">
+                    <input type="text" name="description" class="description" maxlength="30" value="description here">
+                    <input type="text" name="client" class="username" maxlength="15" value="Username here">
+                    <input type="text" name="signer" class="signer" maxlength="15" value="Signer">
+                </div>
+
+            </div>
+            <button type="submit">تنزيل</button>
+        </form>
+
+        <div class="sidebar">
+            <div class="box" data-bg="cer_blue">
+                <span class="active"></span>
+                <img src="{% static 'images/certificates/cer_blue.png' %}"alt="">
+            </div>
+            
+            <div class="box" data-bg="cer_green">
+                <span class=""></span>
+                <img src="{% static 'images/certificates/cer_green.png' %}"alt="">
+            </div>
+
+            <div class="box" data-bg="cer_purple">
+                <span class=""></span>
+                <img src="{% static 'images/certificates/cer_purple.png' %}"alt="">
+            </div>
+            
+        </div>
+
+    </div>
+
+    <script>
+        var certificate_bg_value = document.getElementById('bg');
+        var boxes = document.querySelectorAll('.box');
+        var main_img = document.querySelector('.img-cont img');
+
+        boxes.forEach(box=>{
+
+            box.addEventListener('click', function(){
+                boxes.forEach(i=>{i.querySelector('span').classList.remove('active')});
+                box.querySelector('span').classList.add('active');
+                var new_img_src = box.querySelector('img').src;
+                main_img.src = new_img_src;
+                certificate_bg_value.value = box.dataset.bg;
+            })
+
+        })
+    </script>
+</body>
+</html>
